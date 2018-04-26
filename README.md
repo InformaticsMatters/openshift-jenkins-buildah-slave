@@ -91,7 +91,7 @@ A typical workflow, using a Docker format registry and an existing
 
     $ buildah bud -t me/myimage:latest .
     $ podman login --username <me> --password <password> <registry>:5000
-    $ buildah push --format=v2s2 me/myimage:latest docker:<registry>:5000/<namespace>/myimage:latest
+    $ buildah push --format=v2s2 me/myimage:latest docker://<registry>:5000/<namespace>/myimage:latest
     $ podman logout <registry>:5000
 
 ...where
