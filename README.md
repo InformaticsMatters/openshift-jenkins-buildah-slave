@@ -36,8 +36,8 @@ push it using `docker-compose`.
 To use the image as an OpenShift Jenkins slave you can use the accompanying
 `slave.yaml` template file to create a suitable **ImageStream** using the `oc`
 command-line. Assuming you're logged into the OpenShift server and the project
-you've into which you've installed Jenkins you can run the following
-command to add a suitable image stream.
+into which you've installed Jenkins you can run the following command to add
+a suitable image stream: -
 
     $ oc process -f slave.yaml | oc create -f -
 
@@ -83,20 +83,19 @@ do a number of things: -
 ## So, what can I do?
 With this agent you will be able to build container images in an OpenShift
 Jenkins agent using local storage without a Docker daemon. You use `buildah`
-to `build` and `podman` to login to an external image registry (like Docker)
-before finally using `buildah` to push your image to the new registry.
+to _build_ and `podman` to _login_ to an external image registry (like Docker)
+before finally using `buildah` to _push_ your image to the new registry.
 
-A typical workflow, using a Docker format registry and an existing
+A typical workflow, using a she OpenShift built-in Docker registry and an existing
 `Dockerfile`, might be something like this: -
 
     $ buildah bud -t me/myimage:latest .
-    $ podman login --username <me> --password <password> <registry>:5000
-    $ buildah push --format=v2s2 me/myimage:latest docker://<registry>:5000/<namespace>/myimage:latest
+    $ podman login --username <me> --password <password> docker-registry.default:5000
+    $ buildah push --format=v2s2 me/myimage:latest docker://docker-registry.default:5000/<namespace>/myimage:latest
     $ podman logout <registry>:5000
 
 ...where
 
--   **registry** is the address/IP of the external container registry.
 -   **namespace** is the name of a pre-existing namespace (project)
 
 Alternatively, you can define the image format (if you're using a Dockerfile)
@@ -104,7 +103,16 @@ at the `bud` stage, negating the need for the `--format` option on the push
 command: -
 
     $ buildah bud --format docker -f <Dockerfile> -t me/myimage:latest .
-      
+
+>   In order for the agent to push to the registry you will need to have a
+    suitable OpenShift user account (i.e. `jenkins`) and related privileges
+    including those for the namespace you'll be pushing to:-
+
+    $ oc adm policy add-role-to-user system:registry jenkins
+    $ oc adm policy add-role-to-user system:image-builder jenkins
+    $ oc adm policy add-role-to-user admin jenkins -n <namespace>
+    $ oc adm policy add-scc-to-user -z jenkins privileged
+
 ---
 
 [buildah]: https://github.com/projectatomic/buildah
