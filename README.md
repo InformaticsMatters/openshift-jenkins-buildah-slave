@@ -1,0 +1,1 @@
+openshift-jenkins-buildah-slave
