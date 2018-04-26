@@ -1,0 +1,77 @@
+# An OpenShift slave image template.
+#
+# oc process -f slave.yaml | oc create -f -
+#
+# This is a template for an ImageStream recognised by Jenkins as a viable
+# image for the creation of slave instances due to the presence of the label
+# `role` with value `jenkins-slave`. We refer to this image in our
+# Jenkins pipeline agent with the label defined by `SLAVE_LABEL`
+# (`buildah-slave` by default), i.e.:
+#
+#   agent {
+#     label 'buildah-slave'
+#   }
+#
+# For more information refer to this project's README.md
+#
+# Alan Christie
+# April 2018
+
+kind: Template
+apiVersion: v1
+labels:
+  template: slave
+  app: slave
+  role: jenkins-slave
+
+parameters:
+
+- name: SLAVE_LABEL
+  value: buildah-slave
+  description: >
+    The name by which this image is known to the Jenkins agent.
+    The value of the agent label.
+
+- name: DISPLAY_NAME
+  value: Jenkins Buildah Slave Image
+  description: >
+    A short phrase used as the display name for the image
+
+- name: REGISTRY
+  value: docker.io
+  description: >
+    The Docker registry
+
+- name: PROJECT
+  value: informaticsmatters
+  description: >
+    The Docker project or Image owner
+
+- name: IMAGE
+  value: jenkins-slave-buildah-centos7
+  description: >
+    The image name
+
+- name: TAG
+  value: latest
+  description: >
+    The image tag
+
+objects:
+
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: ${{SLAVE_LABEL}}
+  spec:
+    dockerImageRepository: ${REGISTRY}/${PROJECT}/${IMAGE}
+    tags:
+    - annotations:
+        openshift.io/display-name: "${DISPLAY_NAME}"
+        slave-label: ${{SLAVE_LABEL}}
+      from:
+        kind: DockerImage
+        name: ${REGISTRY}/${PROJECT}/${IMAGE}:${TAG}
+      name: ${{TAG}}
+      importPolicy:
+        scheduled: true

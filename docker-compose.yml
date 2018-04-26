@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  slave-agent-latest:
+    image: informaticsmatters/jenkins-slave-buildah-centos7:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  slave-agent-3.10:
+    image: informaticsmatters/jenkins-slave-buildah-centos7:3.10
+    build:
+      context: .
+      dockerfile: Dockerfile-3_10
+
+  slave-agent-3.9:
+    image: informaticsmatters/jenkins-slave-buildah-centos7:3.9
+    build:
+      context: .
+      dockerfile: Dockerfile-3_9
+
+  slave-agent-3.7:
+    image: informaticsmatters/jenkins-slave-buildah-centos7:3.7
+    build:
+      context: .
+      dockerfile: Dockerfile-3_7
