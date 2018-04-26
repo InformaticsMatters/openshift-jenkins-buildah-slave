@@ -97,7 +97,7 @@ A typical workflow, using a Docker format registry and an existing
 ...where
 
 -   **registry** is the address/IP of the external container registry.
--   **namespace** is the name of a pre-exiting namespace (project)
+-   **namespace** is the name of a pre-existing namespace (project)
 
 Alternatively, you can define the image format (if you're using a Dockerfile)
 at the `bud` stage, negating the need for the `--format` option on the push
