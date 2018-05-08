@@ -64,7 +64,6 @@ objects:
   metadata:
     name: ${{SLAVE_LABEL}}
   spec:
-    dockerImageRepository: ${REGISTRY}/${PROJECT}/${IMAGE}
     tags:
     - annotations:
         openshift.io/display-name: "${DISPLAY_NAME}"
