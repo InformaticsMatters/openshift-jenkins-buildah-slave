@@ -8,13 +8,13 @@ MAINTAINER Alan Christie (alanbchristie)
 
 ENV INSTALL_PATH /project-atomic
 
-ENV BUILDAH_VERSION 0.16.0
+ENV BUILDAH_VERSION 1.0
 ENV BUILDAH_SUB_PATH src/github.com/projectatomic/buildah
 
-ENV PODMAN_VERSION 0.4.2
+ENV PODMAN_VERSION 0.5.1
 ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
 
-ENV SKOPEO_VERSION 0.1.28
+ENV SKOPEO_VERSION 0.1.29
 ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
 
 ENV GOPATH ${INSTALL_PATH}
@@ -57,7 +57,7 @@ RUN yum -y install \
 WORKDIR ${INSTALL_PATH}
 RUN git clone https://github.com/projectatomic/buildah ./${BUILDAH_SUB_PATH}
 WORKDIR ${BUILDAH_SUB_PATH}
-RUN git checkout tags/v${BUILDAH_VERSION}
+RUN git checkout tags/V${BUILDAH_VERSION}
 RUN make; make install
 
 # Get, make and install podman
