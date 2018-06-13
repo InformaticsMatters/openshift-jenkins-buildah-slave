@@ -28,7 +28,7 @@ Build and tag the image...
 Here, we'll deploy to the Docker hub. It's free and simple. We just need to
 push it using `docker-compose`.
 
-    $ docker login -u informaticsmatters
+    $ docker login -u alanbchristie
     [...]
     $ docker-compose push
 
