@@ -1,14 +1,16 @@
 # An OpenShift Jenkins Slave Agent Image for "buildah"
 This is a Jenkins slave image built on the OpenShift Jenkins Maven
-slave that adds [buildah] to the image. It should be
-suitable for OpenShift Origin v3.6/v3.7 deployments. A matching
-**ImageStream** template is also included for the `latest` image.
+slave that adds [buildah] and other utilities to the image. It should be
+suitable for OpenShift Origin v3.9 deployments.
 
-Providing...
+A matching **ImageStream** template is also included for the `latest` image.
+
+This image provides...
 
 -   [buildah] (See `Dockerfile/BUILDAH_VERSION` for version)
 -   [podman]  (See `Dockerfile/PODMAN_VERSION` for version)
 -   [skopeo]  (See `Dockerfile/SCOPEO_VERSION` for version)
+-   [oc cli]  (See `Dockerfile/OC_VERSION` for version))
 
 >   For background material you can refer to the OpenShift documentation for
     their [Jenkins] service and general information on [builds] and image
@@ -17,16 +19,16 @@ Providing...
 ## Building the image
 I use, and you might need...
 
--   Docker Engine `18.03.0-ce`
--   Docker Compose `1.20.1`
+-   Docker Engine `18.06.1-ce`
+-   Docker Compose `1.22.0`
     
 Build and tag the image...
 
     $ docker-compose build
 
 ## Deploying the image
-Here, we'll deploy to the Docker hub. It's free and simple. We just need to
-push it using `docker-compose`.
+Here, we'll deploy to the Docker hub. We just need to push it using
+`docker-compose`.
 
     $ docker login -u alanbchristie
     [...]
@@ -118,5 +120,6 @@ command: -
 [buildah]: https://github.com/projectatomic/buildah
 [builds]: https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/builds_and_image_streams.html
 [jenkins]: https://docs.openshift.com/container-platform/3.6/using_images/other_images/jenkins.html
+[oc cli]: https://docs.openshift.com/container-platform/3.9/cli_reference/get_started_cli.html
 [podman]: https://github.com/projectatomic/libpod
 [skopeo]: https://github.com/projectatomic/skopeo

@@ -7,15 +7,7 @@ FROM openshift/jenkins-slave-maven-centos7@sha256:7575a0adc03ab029b84d1a9743ba99
 MAINTAINER Alan Christie (alanbchristie)
 
 ENV INSTALL_PATH /project-atomic
-
-ENV BUILDAH_VERSION 1.1
-ENV BUILDAH_SUB_PATH src/github.com/projectatomic/buildah
-
-ENV PODMAN_VERSION 0.6.2
-ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
-
-ENV SKOPEO_VERSION 0.1.30
-ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
+ENV OC_TOOL_PATH /oc-tool
 
 ENV GOPATH ${INSTALL_PATH}
 
@@ -53,31 +45,58 @@ RUN yum -y install \
     runc \
     skopeo-containers
 
-# Get, make and install buildah
-WORKDIR ${INSTALL_PATH}
-RUN git clone https://github.com/projectatomic/buildah ./${BUILDAH_SUB_PATH}
-WORKDIR ${BUILDAH_SUB_PATH}
-RUN git checkout tags/v${BUILDAH_VERSION}
-RUN make; make install
+# Get the OpenShift Origin OC CLI tools ---------------------------------------
 
-# Get, make and install podman
+ENV OC_VERSION 3.10.0
+ENV OC_SRC openshift-origin-client-tools-v${OC_VERSION}-dd10d17-linux-64bit
+WORKDIR ${OC_TOOL_PATH}
+RUN wget https://github.com/openshift/origin/releases/download/v${OC_VERSION}/${OC_SRC}.tar.gz && \
+    tar -xvzf ${OC_SRC}.tar.gz && \
+    mv ${OC_SRC}/* . && \
+    rm ${OC_SRC}.tar.gz && \
+    rmdir ${OC_SRC}
+ENV PATH = ${PATH}:${OC_TOOL_PATH}
+
+# Get, make and install podman ------------------------------------------------
+
+ENV PODMAN_VERSION 0.6.5
+ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
+
 WORKDIR ${INSTALL_PATH}
 RUN git clone https://github.com/projectatomic/libpod ./${PODMAN_SUB_PATH}
 WORKDIR ${PODMAN_SUB_PATH}
 RUN git checkout tags/v${PODMAN_VERSION} 2> /dev/null
 RUN make install.tools; make BUILDTAGS='seccomp selinux apparmor'; make install
 
-# Get, make and install skopeo
+# Get, make and install skopeo ------------------------------------------------
+
+ENV SKOPEO_VERSION 0.1.31
+ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
+
 WORKDIR ${INSTALL_PATH}
 RUN git clone https://github.com/projectatomic/skopeo ./${SKOPEO_SUB_PATH}
 WORKDIR ${SKOPEO_SUB_PATH}
 RUN git checkout tags/v${SKOPEO_VERSION} 2> /dev/null
 RUN make binary-local; make install
 
+# Get, make and install buildah -----------------------------------------------
+
+ENV BUILDAH_VERSION 1.3
+ENV BUILDAH_SUB_PATH src/github.com/projectatomic/buildah
+
+WORKDIR ${INSTALL_PATH}
+RUN git clone https://github.com/projectatomic/buildah ./${BUILDAH_SUB_PATH}
+WORKDIR ${BUILDAH_SUB_PATH}
+RUN git checkout tags/v${BUILDAH_VERSION}
+RUN make; make install
+
+# Wrap-up ---------------------------------------------------------------------
+
 # Some handy labels...
 LABEL buildah.version=${BUILDAH_VERSION}
 LABEL podman.version=${PODMAN_VERSION}
 LABEL scopeo.version=${SKOPEO_VERSION}
+LABEL oc.version=${OC_VERSION}
 LABEL name="Jenkins Buildah Slave Agent"
 LABEL author="Alan Christie (alanbchristie)"
 

@@ -18,9 +18,3 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-3_9
-
-  slave-agent-3.7:
-    image: informaticsmatters/jenkins-slave-buildah-centos7:3.7
-    build:
-      context: .
-      dockerfile: Dockerfile-3_7
