@@ -58,8 +58,11 @@ RUN wget https://github.com/openshift/origin/releases/download/v${OC_VERSION}/${
     rmdir ${OC_SRC}
 ENV PATH = ${PATH}:${OC_TOOL_PATH}
 
-# Get, make and install podman ------------------------------------------------
+# Get, make and install podman/libpod -----------------------------------------
 
+# Beyond 0.6 I believe we need Python 3.
+# Unless there's a pressing need for libpod/pobman features
+# it's left at the latest 0.6 release for now...
 ENV PODMAN_VERSION 0.6.5
 ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
 
@@ -91,6 +94,17 @@ WORKDIR ${BUILDAH_SUB_PATH}
 RUN git checkout tags/v${BUILDAH_VERSION}
 RUN make; make install
 
+# Python (pip) ----------------------------------------------------------------
+
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python get-pip.py && \
+    rm get-pip.py
+
+# Ansible ---------------------------------------------------------------------
+
+ENV ANSIBLE_VERSION 2.6.3
+RUN pip install ansible==${ANSIBLE_VERSION}
+
 # Wrap-up ---------------------------------------------------------------------
 
 # Some handy labels...
@@ -98,6 +112,7 @@ LABEL buildah.version=${BUILDAH_VERSION}
 LABEL podman.version=${PODMAN_VERSION}
 LABEL scopeo.version=${SKOPEO_VERSION}
 LABEL oc.version=${OC_VERSION}
+LABEL ansible.version=${ANSIBLE_VERSION}
 LABEL name="Jenkins Buildah Slave Agent"
 LABEL author="Alan Christie (alanbchristie)"
 
