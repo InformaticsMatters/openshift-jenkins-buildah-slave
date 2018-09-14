@@ -7,14 +7,14 @@ services:
       context: .
       dockerfile: Dockerfile
 
-  slave-agent-3.10:
-    image: informaticsmatters/jenkins-slave-buildah-centos7:3.10
-    build:
-      context: .
-      dockerfile: Dockerfile-3_10
+#  slave-agent-3.10:
+#    image: informaticsmatters/jenkins-slave-buildah-centos7:3.10
+#    build:
+#      context: .
+#      dockerfile: Dockerfile-3_10
 
-  slave-agent-3.9:
-    image: informaticsmatters/jenkins-slave-buildah-centos7:3.9
-    build:
-      context: .
-      dockerfile: Dockerfile-3_9
+#  slave-agent-3.9:
+#    image: informaticsmatters/jenkins-slave-buildah-centos7:3.9
+#    build:
+#      context: .
+#      dockerfile: Dockerfile-3_9
