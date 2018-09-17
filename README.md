@@ -7,7 +7,6 @@ A matching **ImageStream** template is also included for the `latest` image.
 
 The modified agent provides the user with...
 
--   [crio-o]  (See `Dockerfile/CONMON_VERSION` for version)
 -   [buildah] (See `Dockerfile/BUILDAH_VERSION` for version)
 -   [podman]  (See `Dockerfile/PODMAN_VERSION` for version)
 -   [skopeo]  (See `Dockerfile/SCOPEO_VERSION` for version)
@@ -122,7 +121,6 @@ command: -
 [ansible]: https://www.ansible.com
 [buildah]: https://github.com/projectatomic/buildah
 [builds]: https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/builds_and_image_streams.html
-[cri-o]: https://github.com/kubernetes-sigs/cri-o
 [jenkins]: https://docs.openshift.com/container-platform/3.6/using_images/other_images/jenkins.html
 [oc cli]: https://docs.openshift.com/container-platform/3.9/cli_reference/get_started_cli.html
 [podman]: https://github.com/projectatomic/libpod
