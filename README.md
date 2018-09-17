@@ -11,7 +11,6 @@ The modified agent provides the user with...
 -   [podman]  (See `Dockerfile/PODMAN_VERSION` for version)
 -   [skopeo]  (See `Dockerfile/SCOPEO_VERSION` for version)
 -   [oc cli]  (See `Dockerfile/OC_VERSION` for version))
--   [ansible] (See `Dockerfile/ANSIBLE_VERION` for version)
 
 >   For background material you can refer to the OpenShift documentation for
     their [Jenkins] service and general information on [builds] and image
@@ -118,7 +117,6 @@ command: -
 
 ---
 
-[ansible]: https://www.ansible.com
 [buildah]: https://github.com/projectatomic/buildah
 [builds]: https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/builds_and_image_streams.html
 [jenkins]: https://docs.openshift.com/container-platform/3.6/using_images/other_images/jenkins.html
