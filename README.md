@@ -10,7 +10,6 @@ The modified agent provides the user with...
 -   [buildah] (See `Dockerfile/BUILDAH_VERSION` for version)
 -   [podman]  (See `Dockerfile/PODMAN_VERSION` for version)
 -   [skopeo]  (See `Dockerfile/SCOPEO_VERSION` for version)
--   [oc cli]  (See `Dockerfile/OC_VERSION` for version))
 
 >   For background material you can refer to the OpenShift documentation for
     their [Jenkins] service and general information on [builds] and image
@@ -120,6 +119,5 @@ command: -
 [buildah]: https://github.com/projectatomic/buildah
 [builds]: https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/builds_and_image_streams.html
 [jenkins]: https://docs.openshift.com/container-platform/3.6/using_images/other_images/jenkins.html
-[oc cli]: https://docs.openshift.com/container-platform/3.9/cli_reference/get_started_cli.html
 [podman]: https://github.com/projectatomic/libpod
 [skopeo]: https://github.com/projectatomic/skopeo

@@ -3,7 +3,7 @@
 # which includes OpenJDK 1.8 and Maven 3.x.
 
 # The v3.9 digest...
-FROM openshift/jenkins-slave-maven-centos7:v3.9@sha256:4d0b0a6cf06eb78d36b651fd3f41e37fab09af3f0dc36553b72886db0929100d
+FROM openshift/jenkins-slave-maven-centos7@sha256:4d0b0a6cf06eb78d36b651fd3f41e37fab09af3f0dc36553b72886db0929100d
 MAINTAINER Alan Christie (alanbchristie)
 
 ENV INSTALL_PATH /project-atomic
@@ -16,10 +16,6 @@ ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
 
 ENV SKOPEO_VERSION 0.1.30
 ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
-
-ENV OC_VERSION 3.9.0
-ENV OC_SRC openshift-origin-client-tools-v${OC_VERSION}-191fece-linux-64bit
-ENV OC_TOOL_PATH /oc-tool
 
 ENV GOPATH ${INSTALL_PATH}
 
@@ -81,23 +77,12 @@ WORKDIR ${SKOPEO_SUB_PATH}
 RUN git checkout tags/v${SKOPEO_VERSION} 2> /dev/null
 RUN make binary-local; make install
 
-# Get the OpenShift Origin OC CLI tools ---------------------------------------
-
-WORKDIR ${OC_TOOL_PATH}
-RUN wget https://github.com/openshift/origin/releases/download/v${OC_VERSION}/${OC_SRC}.tar.gz && \
-    tar -xvzf ${OC_SRC}.tar.gz && \
-    mv ${OC_SRC}/* . && \
-    rm ${OC_SRC}.tar.gz && \
-    rmdir ${OC_SRC}
-ENV PATH = ${PATH}:${OC_TOOL_PATH}
-
 # Wrap-up ---------------------------------------------------------------------
 
 # Some handy labels...
 LABEL buildah.version=${BUILDAH_VERSION}
 LABEL podman.version=${PODMAN_VERSION}
 LABEL scopeo.version=${SKOPEO_VERSION}
-LABEL oc.version=${OC_VERSION}
 LABEL name="Jenkins Buildah Slave Agent"
 LABEL author="Alan Christie (alanbchristie)"
 

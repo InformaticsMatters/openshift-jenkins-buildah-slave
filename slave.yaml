@@ -53,7 +53,7 @@ parameters:
     The image name
 
 - name: TAG
-  value: latest
+  value: '3.9'
   description: >
     The image tag
 

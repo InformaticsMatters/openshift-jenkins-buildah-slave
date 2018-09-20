@@ -1,12 +1,6 @@
 version: '3'
 services:
 
-  slave-agent-latest:
-    image: informaticsmatters/jenkins-slave-buildah-centos7:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
-
   slave-agent-3.10:
     image: informaticsmatters/jenkins-slave-buildah-centos7:3.10
     build:
