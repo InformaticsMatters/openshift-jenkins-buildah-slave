@@ -6,19 +6,6 @@
 FROM openshift/jenkins-slave-maven-centos7@sha256:506d254838a2ab0738668128031597d5ceff587f23e8bb0376c0ac5967a29d2f
 MAINTAINER Alan Christie (alanbchristie)
 
-ENV INSTALL_PATH /project-atomic
-
-ENV BUILDAH_VERSION 1.1
-ENV BUILDAH_SUB_PATH src/github.com/projectatomic/buildah
-
-ENV PODMAN_VERSION 0.6.2
-ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
-
-ENV SKOPEO_VERSION 0.1.30
-ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
-
-ENV GOPATH ${INSTALL_PATH}
-
 USER root
 
 # Install gcc (required to build buildah)
@@ -52,6 +39,19 @@ RUN yum -y install \
     pkgconfig \
     runc \
     skopeo-containers
+
+ENV INSTALL_PATH /project-atomic
+
+ENV BUILDAH_VERSION 1.4
+ENV BUILDAH_SUB_PATH src/github.com/projectatomic/buildah
+
+ENV PODMAN_VERSION 0.6.2
+ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
+
+ENV SKOPEO_VERSION 0.1.30
+ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
+
+ENV GOPATH ${INSTALL_PATH}
 
 # Get, make and install buildah -----------------------------------------------
 
