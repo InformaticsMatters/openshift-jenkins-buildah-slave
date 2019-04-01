@@ -1,7 +1,7 @@
 # An OpenShift Jenkins Slave Agent Image for "buildah"
 This is a Jenkins slave image built on the OpenShift Jenkins Maven
 slave that adds [buildah] and other utilities to the image. It is
-suitable for OpenShift Origin v3.9 deployments.
+suitable for OpenShift Origin v3.11 deployments.
 
 A matching **ImageStream** template is also included for the `latest` image.
 
@@ -18,8 +18,8 @@ The modified agent provides the user with...
 ## Building the image
 I use, and you might need...
 
--   Docker Engine `18.06.1-ce`
--   Docker Compose `1.22.0`
+-   Docker Engine `18.09.2`
+-   Docker Compose `1.23.2`
     
 Build and tag the image...
 

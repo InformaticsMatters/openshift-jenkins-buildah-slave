@@ -19,6 +19,7 @@ RUN yum -y install \
     bzip2 \
     conmon \
     containernetworking-cni \
+    containers-common \
     device-mapper-devel \
     git \
     glibc-devel \
@@ -42,18 +43,12 @@ RUN yum -y install \
 
 ENV INSTALL_PATH /project-atomic
 
-ENV BUILDAH_VERSION 1.4
-ENV BUILDAH_SUB_PATH src/github.com/projectatomic/buildah
-
-ENV PODMAN_VERSION 0.6.2
-ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
-
-ENV SKOPEO_VERSION 0.1.30
-ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
-
 ENV GOPATH ${INSTALL_PATH}
 
 # Get, make and install buildah -----------------------------------------------
+
+ENV BUILDAH_VERSION 1.3
+ENV BUILDAH_SUB_PATH src/github.com/projectatomic/buildah
 
 WORKDIR ${INSTALL_PATH}
 RUN git clone https://github.com/projectatomic/buildah ./${BUILDAH_SUB_PATH}
@@ -63,6 +58,9 @@ RUN make; make install
 
 # Get, make and install podman/libpod -----------------------------------------
 
+ENV PODMAN_VERSION 0.6.2
+ENV PODMAN_SUB_PATH src/github.com/projectatomic/libpod
+
 WORKDIR ${INSTALL_PATH}
 RUN git clone https://github.com/projectatomic/libpod ./${PODMAN_SUB_PATH}
 WORKDIR ${PODMAN_SUB_PATH}
@@ -70,6 +68,9 @@ RUN git checkout tags/v${PODMAN_VERSION} 2> /dev/null
 RUN make install.tools; make BUILDTAGS='seccomp selinux apparmor'; make install
 
 # Get, make and install skopeo ------------------------------------------------
+
+ENV SKOPEO_VERSION 0.1.30
+ENV SKOPEO_SUB_PATH src/github.com/projectatomic/skopeo
 
 WORKDIR ${INSTALL_PATH}
 RUN git clone https://github.com/projectatomic/skopeo ./${SKOPEO_SUB_PATH}
