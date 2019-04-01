@@ -2,8 +2,8 @@
 # It's based on the OpenShift Maven image,
 # which includes OpenJDK 1.8 and Maven 3.x.
 
-# The v3.10 digest...
-FROM openshift/jenkins-slave-maven-centos7@sha256:7575a0adc03ab029b84d1a9743ba9979875ba06c5207dfa7f791fec039159599
+# The v3.11 digest...
+FROM openshift/jenkins-slave-maven-centos7@sha256:506d254838a2ab0738668128031597d5ceff587f23e8bb0376c0ac5967a29d2f
 MAINTAINER Alan Christie (alanbchristie)
 
 ENV INSTALL_PATH /project-atomic
